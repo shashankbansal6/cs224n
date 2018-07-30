@@ -26,22 +26,28 @@ def softmax(x):
     Return:
     x -- You are allowed to modify x in-place
     """
-    orig_shape = x.shape
+    #print(x.shape)
+    print(x)
+
+    # orig_shape = x.shape
+    # e_x = np.exp(x - np.max(x))
+    # return e_x / e_x.sum(axis=0)
 
     if len(x.shape) > 1:
-        # Matrix
-        ### YOUR CODE HERE
-        raise NotImplementedError
-        ### END YOUR CODE
+        s = np.max(x, axis=1)
+        s = s[:, np.newaxis] # necessary step to do broadcasting
+        e_x = np.exp(x - s)
+        div = np.sum(e_x, axis=1)
+        div = div[:, np.newaxis] # dito
+        return e_x / div
     else:
-        # Vector
-        ### YOUR CODE HERE
-        raise NotImplementedError
-        ### END YOUR CODE
-
-    assert x.shape == orig_shape
-    return x
-
+        return np.exp(x) / np.sum(np.exp(x), axis=0)
+    #     # Vector
+    #     ### YOUR CODE HERE
+    #     raise NotImplementedError
+    #     ### END YOUR CODE
+    #
+    # assert x.shape == orig_shape
 
 def test_softmax_basic():
     """
@@ -78,7 +84,8 @@ def test_softmax():
     """
     print "Running your tests..."
     ### YOUR CODE HERE
-    raise NotImplementedError
+
+    #raise NotImplementedError
     ### END YOUR CODE
 
 
